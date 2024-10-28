@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 class Product(models.Model): #outer class
@@ -10,3 +11,28 @@ class Product(models.Model): #outer class
         # concept metadata information sur la donnee
         verbose_name = 'Produits'
         ordering = ['price']
+        
+        
+        
+class Blog(models.Model):
+    title = models.CharField(max_length=100)
+    content = RichTextField()
+    image = models.ImageField(upload_to='blog_images/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)
+    """
+    CASCADE: supprime les objets liés
+    PROTECT: refuse la suppression de l'objet lié
+    SET_NULL: définit la clé étrangère sur NULL
+    SET_DEFAULT: définit la clé étrangère sur sa valeur par défaut
+    SET(): définit la clé étrangère sur la valeur donnée
+    DO_NOTHING: ne fait rien
+    """
+    
+    class Meta:
+        verbose_name = 'Blog'
+        ordering = ['title']
+        
+    def __str__(self):
+        return self.title        

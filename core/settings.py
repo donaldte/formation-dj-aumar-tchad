@@ -1,12 +1,21 @@
-
+import os
 from pathlib import Path
+from django.contrib import messages
+
+# bootstrap messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.SUCCESS: 'success',
+    messages.INFO: 'info',
+    messages.WARNING: 'warning',
+    messages.DEBUG: 'secondary',
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-k+_36+my8_ltg$5rm_d^l^zhyl3853t)7v$k6@laewim0k+=1b'
@@ -29,6 +38,8 @@ DJANGO_APPS = [
 ]
 
 THIRS_PARTY_APPS = [
+    'ckeditor',
+    'ckeditor_uploader',  # if you want upload functionality
     
 ]
 
@@ -40,7 +51,13 @@ LOCAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRS_PARTY_APPS + LOCAL_APPS
 
-
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 200,
+        'width': 1200,
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,7 +74,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'], # chemin vers les templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,6 +136,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# media files
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_UPLOAD_PATH = "uploads_ck/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

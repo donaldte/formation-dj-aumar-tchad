@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<h1 class='text-center my-10'> Bienvenue sur les Aumar blogs </h1>
+
+    <div class="row">
+       
+            {% for post in blogs %}
+             <div class="col-md-3 mx-2 my-2">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title|capfirst }}</h5>
+                        <p class="card-text"> {{post.content|truncatechars:200|safe }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ post.created_at }}</li>
+                        <li class="list-group-item">{{ post.modified_at }}</li>
+                        <li class="list-group-item">{{ post.user.username|capfirst }}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Lire plus</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}    
+       
+    </div>
+    
+{% endblock %}
