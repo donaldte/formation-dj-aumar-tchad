@@ -46,7 +46,8 @@ THIRS_PARTY_APPS = [
 # ORM 
 
 LOCAL_APPS = [
-    'produits'
+    'produits',
+    'accounts',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRS_PARTY_APPS + LOCAL_APPS
@@ -88,6 +89,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 # Database

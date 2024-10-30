@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from accounts.models import CustomUser
 
 
 class Product(models.Model): #outer class
@@ -20,7 +21,7 @@ class Blog(models.Model):
     image = models.ImageField(upload_to='blog_images/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
     """
     CASCADE: supprime les objets liés
     PROTECT: refuse la suppression de l'objet lié
@@ -32,7 +33,13 @@ class Blog(models.Model):
     
     class Meta:
         verbose_name = 'Blog'
-        ordering = ['title']
+        ordering = ['-created_at']
         
     def __str__(self):
-        return self.title        
+        return self.title       
+    
+    
+    def get_image(self):
+        if self.image:
+            return self.image.url
+        return None 

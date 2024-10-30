@@ -16,7 +16,8 @@ from .models import Product, Blog
         
         
 class BlogForm(forms.ModelForm):
-    title = forms.CharField(max_length=100)
+    title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Title', 'class': 'form-control'}))
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}))
     class Meta:
         model = Blog
         fields = ['title', 'content', 'image']
@@ -43,8 +44,6 @@ class BlogForm(forms.ModelForm):
         
         if title == content:
             raise forms.ValidationError('Title and content must be different')
-        # l'utilisateur connecté
-        user = self.request.user
-        cleaned_data['user'] = user
+        
 
         return cleaned_data

@@ -20,7 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),  # for file upload support
-    path('', include('produits.urls'))
+    path('', include('produits.urls')),
+    path('accounts/', include('accounts.urls'))
 ]
 
 # configration des media et static files

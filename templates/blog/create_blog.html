@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1 class='text-center my-10'> Creation nouveau article </h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ forms.as_p }}
+    {{ forms.media }}
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+{% endblock %}
