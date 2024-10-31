@@ -65,3 +65,22 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.email
+    
+    
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE,)
+    image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = 'Profile'
+        ordering = ['-created_at']
+        
+    def __str__(self):
+        return self.user.email
+    
+    def get_image(self):
+        if self.image:
+            return self.image.url
+        return None    
