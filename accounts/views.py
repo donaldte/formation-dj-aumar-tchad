@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import CustomUser
+from .models import CustomUser , Profile
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -56,6 +56,7 @@ class AccountUserCreation(View):
                                            username=username, first_name=first_name,
                                            last_name=last_name
                                            )
+            # give some permissions to the user
             user.user_permissions.add(Permission.objects.get(codename='add_blog'))
             
             # add to group (profile_editors)
