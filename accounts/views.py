@@ -4,32 +4,20 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-
-
-#view base sur les fonction de django
-# les vue base sur les classe generic view(tu dois definier ton formulaire)
-# les fonction view base sur les classe 
-
+from django.contrib.auth.models import Permission, Group
 
 """
-class AccountUserCreation(CreateView):
-    model = CustomUser
-    fields = ['email', 'username', 'first_name', 'last_name', 'password']
-    template_name = 'account/register.html'
-    success_url = '/account/login/'
-    form_class = UserFormClass
-    
-    def form_valid(self, form):
-        form.save()
-        messages.success(self.request, 'Account created successfully')
-        return super().form_valid(form)
-    
-    def form_invalid(self, form):
-        messages.error(self.request, 'An error occured')
-        return super().form_invalid(form)
+group_vendeurs = Group.objects.create(name='vendeurs')
+group_editors = Group.objects.create(name='editors')
+group_admins = Group.objects.create(name='admins')
+group_superusers = Group.objects.create(name='superusers')
+group_customers = Group.objects.create(name='customers')
+
+add permission to group
+group_vendeurs.permissions.add(Permission.objects.get(codename='add_blog'))
+group_editors.permissions.add(Permission.objects.get(codename='add_blog'))
+group_admins.permissions.add(Permission.objects.get(codename='add_blog'))
 """
-
-
 
 class AccountUserCreation(View):
     
@@ -64,10 +52,16 @@ class AccountUserCreation(View):
         
         try:
         
-            CustomUser.objects.create_user(email=email, password=password, 
+            user = CustomUser.objects.create_user(email=email, password=password, 
                                            username=username, first_name=first_name,
                                            last_name=last_name
                                            )
+            user.user_permissions.add(Permission.objects.get(codename='add_blog'))
+            
+            # add to group (profile_editors)
+            user.groups.add(Group.objects.get(name='profile_editors'))
+            
+            user.save()
             messages.success(request, 'Account created successfully')
             return render(request, self.template_name)
         except Exception as e:
@@ -109,8 +103,19 @@ class AccountUserLogin(View):
             messages.error(request, 'Invalid credentials')
             return render(request, self.template_name)
         else:
-            login(request, user)
-            messages.success(request, 'Login successful')
+            # check if the user has add blog permission before login
+            if user.has_perm('produits.add_blog'): # app_name.codename
+                #verify si l'utilisateur est dans le groupe profile_editors
+                # if user.groups.filter(name='profile_editors').exists():
+                #     login(request, user)
+                #     messages.success(request, 'Login successful')
+                # else:
+                #     messages.error(request, 'You are not allowed to login')
+                # has_perms(['app_name.codename', 'app_name.codename'])
+                login(request, user)
+                messages.success(request, 'Login successful')
+            else:
+                messages.error(request, 'You do not have permission to login')    
             return render(request, self.template_name)
         
         

@@ -76,6 +76,17 @@ class Profile(models.Model):
     class Meta:
         verbose_name = 'Profile'
         ordering = ['-created_at']
+        permissions = [
+            ('can_view_profile', 'Can view profile'),
+            ('can_edit_profile', 'Can edit profile'),
+            ('can_delete_profile', 'Can delete profile'),
+            ('can_create_profile', 'Can create profile'),
+            ('can_list_profile', 'Can list profile'),
+            ('can_search_profile', 'Can search profile'),
+            ('can_export_profile', 'Can export profile'),
+            ('can_import_profile', 'Can import profile'),
+            ('can_send_profile', 'Can send profile'),
+        ]
         
     def __str__(self):
         return self.user.email
