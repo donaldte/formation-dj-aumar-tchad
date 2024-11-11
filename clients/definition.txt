@@ -1,0 +1,28 @@
+API: application programming interface 
+
+api web: http(s) 
+
+api rest: api retourne les donnees json  
+
+api graphql: developpement qui a juste un seul point de terminaison ou endpoind  
+
+endpoint: un point terminaison: https/anything.com 
+
+json: Javascript object notation i.e des dictionaires None, Null 
+
+status: 100 a 500 
+
+serialisation: c'est transforme les donne json en object python  
+
+deserialisation: c'est transformer un object python en donnee json 
+
+methodes: GET, POST, PATCH, PUT, HEAD, OPTIONS, DELETE
+
+validation: verification des donnees d'une api
+
+Pour les api avec django(django rest framework)
+
+
+1---> monolithique (MVT----MVC)
+1---> microservice
+
