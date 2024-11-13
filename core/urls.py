@@ -21,7 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),  # for file upload support
     path('', include('produits.urls')),
-    path('accounts/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls')),
+   # path('payment/', include('payment.urls')),
+    path('api/', include('api.urls')),
 ]
 
 # configration des media et static files

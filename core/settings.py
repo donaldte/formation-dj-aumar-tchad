@@ -40,6 +40,7 @@ DJANGO_APPS = [
 THIRS_PARTY_APPS = [
     'ckeditor',
     'ckeditor_uploader',  # if you want upload functionality
+    'rest_framework',
     
 ]
 
@@ -49,6 +50,7 @@ LOCAL_APPS = [
     'produits',
     'accounts',
     'payment',
+    'api',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRS_PARTY_APPS + LOCAL_APPS
