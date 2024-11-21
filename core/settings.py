@@ -41,6 +41,7 @@ THIRS_PARTY_APPS = [
     'ckeditor',
     'ckeditor_uploader',  # if you want upload functionality
     'rest_framework',
+    'drf_yasg',
     
 ]
 
