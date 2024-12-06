@@ -40,7 +40,7 @@ def home(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-@api_view(['GET', ])
+@api_view(['GET'])
 def reference_api_view(request):
     references = Reference.objects.all()
     serializer = ReferenceSerializer(references, many=True)
@@ -51,3 +51,14 @@ def reference_api_view(request):
 class ActionViewSet(ModelViewSet):
     queryset = Action.objects.all()
     serializer_class = ActionSerializer
+    
+    
+    
+"""
+Relation 
+permission,
+authentification
+throuttle
+pagination
+documentation
+"""
