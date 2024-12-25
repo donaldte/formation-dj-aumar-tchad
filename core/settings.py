@@ -56,6 +56,18 @@ LOCAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRS_PARTY_APPS + LOCAL_APPS
 
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '1/day',  # Limite de 100 requêtes par jour pour les anonymes
+        'user': '2/day',  # Limite de 1000 requêtes par jour pour les utilisateurs authentifiés
+    }
+}
+
+
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',

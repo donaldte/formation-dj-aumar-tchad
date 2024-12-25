@@ -3,12 +3,25 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Action, Reference
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, throttle_classes
 from .serializers import ActionSerializer, ReferenceSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
+# import throttle
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 
+
+
+class CustomUserRateThrottle(UserRateThrottle):
+    scope = 'user'
+    rate  = '3/min'
+    
+
+class CustomAnonRateThrottle(AnonRateThrottle):
+    scope = 'anon'
+    rate  = '3/min'
+    
 
 # @csrf_exempt
 # def home(request): 
@@ -41,6 +54,7 @@ def home(request):
 
 
 @api_view(['GET'])
+@throttle_classes([CustomUserRateThrottle, CustomAnonRateThrottle])
 def reference_api_view(request):
     references = Reference.objects.all()
     serializer = ReferenceSerializer(references, many=True)
@@ -52,7 +66,7 @@ class ActionViewSet(ModelViewSet):
     queryset = Action.objects.all()
     serializer_class = ActionSerializer
     
-    
+
     
 """
 Relation 
